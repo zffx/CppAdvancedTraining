@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-MyVector::MyVector(int size, int defaultValue):
+MyVector::MyVector(int size, int defaultValue /* =0 */):
     mSize(size),
     mVector(new int[mSize])
 {
     std::cout << "MyVector::MyVector(int size, int defaultValue)" << std::endl;
-    for(int i = 0; i < mSize; i++)
+    for(unsigned int i = 0; i < mSize; i++)
     {
         mVector[i] = defaultValue;
     }
@@ -16,14 +16,14 @@ MyVector::MyVector(int size, int defaultValue):
 MyVector::~MyVector()
 {
     std::cout << "MyVector::~MyVector()" << std::endl;
-    delete []mVector;
+    delete [] mVector;
 }
 
 MyVector::MyVector(const MyVector &orig):mSize(orig.size())
 {
     std::cout << "MyVector::MyVector(const MyVector &orig)" << std::endl;
     mVector = new int[mSize];
-    for(int i = 0; i < mSize; i++)
+    for(unsigned int i = 0; i < mSize; i++)
     {
         mVector[i] = orig.mVector[i];
     }
@@ -34,24 +34,25 @@ MyVector& MyVector::operator=(const MyVector& orig)
     std::cout << "MyVector::operator=()" << std::endl;
     if(this != &orig)
     {
+        delete [] mVector; //dont forget to release it!
         mSize = orig.size();
         mVector = new int[mSize];
-        for(int i = 0; i < mSize; i++)
+        for(unsigned int i = 0; i < mSize; i++)
         {
-            this->mVector[i] = orig.mVector[i];/*you dont necessarily use this->
-            infront*/
+            /*you dont necessarily use this->infront*/
+            //this->mVector[i] = orig.mVector[i];
             mVector[i] = orig.mVector[i];
         }
     }
     return *this;
 }
 
-bool MyVector::operator==(const MyVector& right)
+bool MyVector::operator==(const MyVector& right) const
 {
     std::cout << "MyVector::operator==(const MyVector& right)" << std::endl;
     if(mSize != right.size())
         return false;
-    for(int i = 0; i < mSize; i++)
+    for(unsigned int i = 0; i < mSize; i++)
     {
         if(mVector[i] != right.mVector[i])
             return false;
@@ -59,13 +60,13 @@ bool MyVector::operator==(const MyVector& right)
     return true;
 }
 
-bool MyVector::operator!=(const MyVector& right)
+bool MyVector::operator!=(const MyVector& right) const
 {
     std::cout << "MyVector::operator!=(const MyVector& right)" << std::endl;
     return !(operator==(right));
 }
 
-int MyVector::size() const
+unsigned int MyVector::size() const
 {
     std::cout << "MyVector::size()" << std::endl;
     return mSize;
@@ -76,7 +77,7 @@ void MyVector::traceMyVector()
     std::cout << "MyVector::traceMyVector()" << std::endl;
     std::cout << "size of the array is: " << mSize << std::endl;
     std::cout << "value of elements are: " <<std::endl;
-    for(int i = 0; i < mSize; i++)
+    for(unsigned int i = 0; i < mSize; i++)
     {
         std::cout << "myVector[" << i <<"]: " << mVector[i] << "\t";
 

@@ -4,16 +4,16 @@
 class MyVector{
 
 public:
-    MyVector(int size, int defaultValue = 0);
+    explicit MyVector(int size, int defaultValue = 0);
     ~MyVector();
     MyVector(const MyVector& orig) ;
     MyVector& operator=(const MyVector& orig);
-    bool operator==(const MyVector& right);
-    bool operator!=(const MyVector& right);
-    int size() const;
+    bool operator==(const MyVector& right) const;
+    bool operator!=(const MyVector& right) const;
+    unsigned int size() const;
     void traceMyVector();
 private:
-    int mSize;
+    unsigned int mSize;
     int* mVector;
 };
 
