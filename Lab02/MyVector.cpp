@@ -1,6 +1,7 @@
 #include "MyVector.h"
 
 #include <iostream>
+#include <algorithm>
 
 MyVector::MyVector(int size, int defaultValue /* =0 */):
     mSize(size),
@@ -29,6 +30,18 @@ MyVector::MyVector(const MyVector &orig):mSize(orig.size())
     }
 }
 
+MyVector::MyVector(MyVector&& orig):mSize(orig.mSize),mVector(nullptr)
+{
+    std::cout << "MyVector::MyVector(MyVector&& orig)" << std::endl;
+    /*
+    note if you do swap(*this, orig), swap the whole object will trigger
+    the copy constructor again, and results in infinite loop of calling
+    copy constructors, the right way is to swap each invidiual mamber
+    variable
+    */
+    std::swap(mVector, orig.mVector);
+}
+
 MyVector& MyVector::operator=(const MyVector& orig)
 {
     std::cout << "MyVector::operator=()" << std::endl;
@@ -44,6 +57,18 @@ MyVector& MyVector::operator=(const MyVector& orig)
             mVector[i] = orig.mVector[i];
         }
     }
+    return *this;
+}
+
+MyVector& MyVector::operator=(MyVector&& orig)
+{
+    std::cout << "MyVector::operator=(MyVector&& orig)" << std::endl;
+    /*
+    note swap the whole object will trigger the copy constructor whose
+    perform can be even worse than the ordinary version
+    */
+    std::swap(mSize, orig.mSize);
+    std::swap(mVector, orig.mVector);
     return *this;
 }
 
@@ -85,14 +110,25 @@ void MyVector::traceMyVector()
     std::cout << std::endl << std::endl;
 }
 
+//ONLY Test Code below:
+MyVector create_my_vector()
+{
+    MyVector v{ 10, 1 };
+    return v;
+}
+
 void testLab2()
 {
-  MyVector v1(7, 1); // 7 elements initialized to 1
-  v1.traceMyVector();
-  MyVector v2(v1); // copying
-  v2.traceMyVector();
-  MyVector v3(100); // 100 elements initialized to 0
-  v3.traceMyVector();
-  v3 = v2;  // assignment
-  v3.traceMyVector();
+    MyVector v1(7, 1); // 7 elements initialized to 1
+    v1.traceMyVector();
+    MyVector v2(v1); // copying
+    v2.traceMyVector();
+    MyVector v3(100); // 100 elements initialized to 0
+    v3.traceMyVector();
+    v3 = v2;  // assignment
+    v3.traceMyVector();
+
+    MyVector v4{ create_my_vector() }; // verify by debugging that moving ctr runs
+    v4 = create_my_vector();  // verify by debugging that moving assignment runs
+    v4.traceMyVector();
 }

@@ -6,8 +6,10 @@ class MyVector{
 public:
     explicit MyVector(int size, int defaultValue = 0);
     ~MyVector();
-    MyVector(const MyVector& orig) ;
+    MyVector(const MyVector& orig);
+    MyVector(MyVector&& orig);
     MyVector& operator=(const MyVector& orig);
+    MyVector& operator=(MyVector&& orig);
     bool operator==(const MyVector& right) const;
     bool operator!=(const MyVector& right) const;
     unsigned int size() const;
