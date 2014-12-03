@@ -2,22 +2,21 @@
 #define SHAPE_H
 
 #include "IShape.h"
+#include "Point.h"
 
 #include <string>
 
 class Shape : public IShape
 {
 public:
-    Shape(int x, int y, double size);
-    Shape(int x, int y, double size, const char *name);
-    virtual void move(int, int);
-    virtual double area() const;
-    virtual void resize(double);
-    virtual std::string to_string() const = 0;
+    Shape(Point p, const char *name);
+    virtual void move(int, int) override;
+    virtual void resize(double) override;
     virtual ~Shape() {}
+
 protected:
-    int mCoordinateX;
-    int mCoordinateY;
+    virtual std::string to_string() const override;
+    Point mPoint;
     double mArea;
     std::string mName;
 };

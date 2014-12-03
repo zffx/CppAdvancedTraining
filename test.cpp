@@ -4,6 +4,7 @@
 #include "./Lab03/Dice.h"
 #include "./Lab04/IShape.h"
 #include "./Lab04/Rectangle.h"
+#include "./Lab04/Point.h"
 
 #include <iostream>
 void testLab1()
@@ -88,13 +89,15 @@ void testLab4()
     IShape* shapes[10];
     //shapes[0] = new Ellipse(Point{ 100, 100 }, 30, 40);
     //shapes[1] = new Rectangle(Point{ 200, 200 }, 50, 80);
-    shapes[1] = new Rectangle(200, 200 , 50.0);
+    shapes[1] = new Rectangle(Point{ 200, 200 }, 50, 80);
     /*
     std::cout << shapes[0]->to_string();
     shapes[0]->resize(2.5);
     std::cout << shapes[0]->to_string();
     */
-    std::cout << shapes[1]->to_string();
+    std::cout << shapes[1]->to_string();/* note the visibility of to_string() is
+    the same as defined in the pointer but not the object, in this case it is
+    the one in IShape but not Rectangle*/
     shapes[1]->move(50, 50);
     std::cout << shapes[1]->to_string();
     std::cout << "Area " << shapes[1]->area() << std::endl;

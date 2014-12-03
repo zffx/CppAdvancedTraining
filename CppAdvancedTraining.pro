@@ -18,5 +18,6 @@ HEADERS += \
     Lab04/IShape.h \
     Lab04/Shape.h \
     Lab04/Rectangle.h \
-    Lab04/ShapeNames.h
+    Lab04/ShapeNames.h \
+    Lab04/Point.h
 
