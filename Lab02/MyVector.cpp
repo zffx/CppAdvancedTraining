@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>
 
 MyVector::MyVector(int size, int defaultValue /* =0 */):
     mSize(size),
@@ -78,6 +79,29 @@ MyVector& MyVector::operator=(MyVector&& orig)
     return *this;
 }
 
+int& MyVector::operator[](unsigned int index)
+{
+    std::cout << "MyVector::operator[]" << std::endl;
+    std::cout <<std::endl;
+    std::cout << typeid(*this).name() <<std::endl;
+    std::cout <<std::endl;
+    if(index >= mSize)
+    {
+        std::cout << "Index out of boundary!" << std::endl;
+        throw std::domain_error("Index out of boundary!");
+    }
+    else
+    {
+        return mVector[index];
+    }
+}
+
+const int& MyVector::operator[](unsigned int index) const
+{
+    std::cout << "MyVector::operator[] const" << std::endl;
+    return const_cast<const int&>((*this)[index]);
+}
+
 bool MyVector::operator==(const MyVector& right) const
 {
     std::cout << "MyVector::operator==(const MyVector& right)" << std::endl;
@@ -95,6 +119,36 @@ bool MyVector::operator!=(const MyVector& right) const
 {
     std::cout << "MyVector::operator!=(const MyVector& right)" << std::endl;
     return !(operator==(right));
+}
+
+bool MyVector::operator<(const MyVector& right) const
+{
+    std::cout << "MyVector::operator<" << std::endl;
+    unsigned int size = std::min(mSize, right.mSize);
+    for(unsigned int i = 0; i < size; i++)
+    {
+        if(mVector[i] > right.mVector[i])
+            return false;
+    }
+    return mSize < right.mSize ? true : false;
+}
+
+bool MyVector::operator<=(const MyVector& right) const
+{
+    std::cout << "MyVector::operator<=" << std::endl;
+    return operator==(right) || operator <(right);
+}
+
+bool MyVector::operator>(const MyVector& right) const
+{
+    std::cout << "MyVector::operator>" << std::endl;
+    return !operator<=(right);
+}
+
+bool MyVector::operator>=(const MyVector& right) const
+{
+    std::cout << "MyVector::operator>=" << std::endl;
+    return ! operator<(right);
 }
 
 unsigned int MyVector::size() const

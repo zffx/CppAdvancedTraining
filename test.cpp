@@ -105,3 +105,14 @@ void testLab4()
     //delete shapes[0];
     delete shapes[1];
 }
+
+void testLab5()
+{
+    MyVector v1{ 7, 0 };
+    MyVector v2{ 8, 0 };
+    std::cout << (v1 == v2) << std::endl;
+    std::cout << (v1 < v2) << std::endl;
+    v1[0] = 1;
+    v1.traceMyVector();
+    std::cout << (v1 < v2) << std::endl;
+}
