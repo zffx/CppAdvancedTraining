@@ -2,6 +2,8 @@
 #include "./Lab01/Lab_1.h"
 #include "./Lab02/MyVector.h"
 #include "./Lab03/Dice.h"
+#include "./Lab04/IShape.h"
+#include "./Lab04/Rectangle.h"
 
 #include <iostream>
 void testLab1()
@@ -57,4 +59,46 @@ void testLab3()
         printDice(d2);
     }
     std::cout << std::endl;
+}
+
+void testLabX()
+{
+    class MyBase {
+    public:
+        virtual void m() { std::cout << "MyBase::m()" << std::endl;}
+        MyBase() { std::cout << "MyBase::MyBase()" << std::endl; this->m();}
+        virtual ~MyBase()
+        {}
+    };
+
+    class MyDerived : public MyBase {
+    public:
+        void m(){ std::cout << "MyDerived::m()" << std::endl;}
+        MyDerived() { std::cout << "MyDerived::MyDerived()" << std::endl; m();}
+        ~MyDerived() {}
+    };
+
+    MyBase *pM = new MyDerived();
+    pM->m();
+    delete pM;
+}
+
+void testLab4()
+{
+    IShape* shapes[10];
+    //shapes[0] = new Ellipse(Point{ 100, 100 }, 30, 40);
+    //shapes[1] = new Rectangle(Point{ 200, 200 }, 50, 80);
+    shapes[1] = new Rectangle(200, 200 , 50.0);
+    /*
+    std::cout << shapes[0]->to_string();
+    shapes[0]->resize(2.5);
+    std::cout << shapes[0]->to_string();
+    */
+    std::cout << shapes[1]->to_string();
+    shapes[1]->move(50, 50);
+    std::cout << shapes[1]->to_string();
+    std::cout << "Area " << shapes[1]->area() << std::endl;
+
+    //delete shapes[0];
+    delete shapes[1];
 }

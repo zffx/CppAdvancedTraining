@@ -13,7 +13,8 @@ int main()
     cout << "Input the number to run:" <<endl
          << "1.Lab1" << endl
          << "2.Lab2" << endl
-         << "3.Lab3" << endl;
+         << "3.Lab3" << endl
+         << "4.Lab4" << endl;
     unsigned int choice = 0;
     cin >> choice ;
 
@@ -33,6 +34,10 @@ int main()
     {
         testLab3();
         break;
+    }
+    case 4:
+    {
+        testLab4();
     }
     default:
         break;
