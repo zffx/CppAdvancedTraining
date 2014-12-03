@@ -30,7 +30,7 @@ MyVector::MyVector(const MyVector &orig):mSize(orig.size())
     }
 }
 
-MyVector::MyVector(MyVector&& orig):mSize(orig.mSize),mVector(nullptr)
+MyVector::MyVector(MyVector&& orig):mSize(0),mVector(nullptr)
 {
     std::cout << "MyVector::MyVector(MyVector&& orig)" << std::endl;
     /*
@@ -38,7 +38,13 @@ MyVector::MyVector(MyVector&& orig):mSize(orig.mSize),mVector(nullptr)
     the copy constructor again, and results in infinite loop of calling
     copy constructors, the right way is to swap each invidiual mamber
     variable
+
+    it is important to rewind this object to a valid status(e.g. mSize = 0,
+    and mVector = nulptr) before swapping it to the temp variable(orig), since
+    sometime the customized destructor might depends on that state of the object
     */
+
+    std::swap(mSize, orig.mSize);
     std::swap(mVector, orig.mVector);
 }
 
@@ -110,25 +116,4 @@ void MyVector::traceMyVector()
     std::cout << std::endl << std::endl;
 }
 
-//ONLY Test Code below:
-MyVector create_my_vector()
-{
-    MyVector v{ 10, 1 };
-    return v;
-}
 
-void testLab2()
-{
-    MyVector v1(7, 1); // 7 elements initialized to 1
-    v1.traceMyVector();
-    MyVector v2(v1); // copying
-    v2.traceMyVector();
-    MyVector v3(100); // 100 elements initialized to 0
-    v3.traceMyVector();
-    v3 = v2;  // assignment
-    v3.traceMyVector();
-
-    MyVector v4{ create_my_vector() }; // verify by debugging that moving ctr runs
-    v4 = create_my_vector();  // verify by debugging that moving assignment runs
-    v4.traceMyVector();
-}

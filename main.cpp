@@ -1,5 +1,5 @@
-#include "./Lab01/Lab_1.h"
-#include "./Lab02/MyVector.h"
+
+#include "test.h"
 
 #include <string>
 #include <iostream>
@@ -12,7 +12,8 @@ int main()
 {
     cout << "Input the number to run:" <<endl
          << "1.Lab1" << endl
-         << "2.Lab2" << endl;
+         << "2.Lab2" << endl
+         << "3.Lab3" << endl;
     unsigned int choice = 0;
     cin >> choice ;
 
@@ -20,12 +21,18 @@ int main()
     {
     case 1:
     {
-        C c;
+        testLab1();
         break;
     }
     case 2:
     {
         testLab2();
+        break;
+    }
+    case 3:
+    {
+        testLab3();
+        break;
     }
     default:
         break;
