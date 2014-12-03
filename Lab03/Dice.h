@@ -1,11 +1,6 @@
 #ifndef DICE_H
 #define DICE_H
 
-class InitRand
-{
-public:
-    InitRand();
-};
 
 class Dice{
 public:
@@ -27,6 +22,12 @@ private:
     that I used before I knew this trick is put this in the constructor of the
     dice: srand(time(nullptr) + rand())
     */
+    class InitRand
+    {
+    public:
+        InitRand();
+    };
+
     static InitRand sInit;
     unsigned int mValue;
 };

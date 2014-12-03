@@ -4,18 +4,23 @@
 #include <ctime>
 #include <iostream>
 
-InitRand Dice::sInit{}; /*use the default constructor to initialize the static
-member, use {} instead of () to initialize values variables is a new feature
-in C++11*/
+/*use the default constructor to initialize the
+static member, use {} instead of () to initialize values for variables is a new
+feature in C++11*/
 
-InitRand::InitRand()
+Dice::InitRand Dice::sInit; //this works
+//Dice::InitRand Dice::sInit(Dice::InitRand()); //this doesn't work!
+//Dice::InitRand Dice::sInit{};
+
+Dice::InitRand::InitRand()
 {
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
 }
 
-Dice::Dice():mValue(0)
+Dice::Dice()
 {
     std::cout << "Dice::Dice()" << std::endl;
+    roll();
 }
 
 void Dice::roll()
