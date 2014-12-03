@@ -4,6 +4,15 @@
 #include <ctime>
 #include <iostream>
 
+InitRand Dice::sInit{}; /*use the default constructor to initialize the static
+member, use {} instead of () to initialize values variables is a new feature
+in C++11*/
+
+InitRand::InitRand()
+{
+    srand(time(nullptr));
+}
+
 Dice::Dice():mValue(0)
 {
     std::cout << "Dice::Dice()" << std::endl;
@@ -12,7 +21,6 @@ Dice::Dice():mValue(0)
 void Dice::roll()
 {
     //std::cout << "Dice::roll()" << std::endl;
-    srand(time(nullptr)+ rand());
     mValue = rand()%6+1;
 }
 
