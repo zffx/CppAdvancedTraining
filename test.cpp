@@ -91,7 +91,6 @@ void testLab4()
 {
     IShape* shapes[10];
     //shapes[0] = new Ellipse(Point{ 100, 100 }, 30, 40);
-    //shapes[1] = new Rectangle(Point{ 200, 200 }, 50, 80);
     shapes[1] = new Rectangle(Point{ 200, 200 }, 50, 80);
     /*
     std::cout << shapes[0]->to_string();
@@ -137,6 +136,11 @@ void testLab7()
     std::cout << (v1 == v2) << std::endl;
     std::cout << (v1 < v2) << std::endl;
     v1[0] = "Paj";
+    try{
+        v1[100] = "SB";
+    } catch (std::logic_error& e) {
+        std::cout << e.what() << std::endl;
+    }
     std::cout << (v1 < v2) << std::endl;
 
     MyVector<double> v3{ 10, 0.5 };
@@ -146,4 +150,28 @@ void testLab7()
     MyVector<Test> v5{ 5 };
     //if (v4 == v5) // error! Test has no op!=. Template methods are compiled only when called
     ;
+}
+
+MyVector<std::string> f() { return MyVector<std::string>(100); }
+void TestLab11()
+{
+    MyVector<std::string> v1{ 7, "Hello" };
+    MyVector<std::string> v2{ 100 };
+    v2 = v1; // test assignment
+    v2 = f(); // test moving assignment
+
+    // test Copy-And-Swap:
+    try {
+        using std::swap;
+        MyVector<std::string> tmp{ v1 };
+        for (unsigned int i{ 0 }; i < 7; i++)
+            tmp[i] = "New string causing reallocations inside the string objects";
+        swap(v1, tmp);
+    }
+    catch(...)
+    {
+        // v1 in a valid state
+    }
+    for (unsigned int i{ 0 }; i < 7; i++)
+        std::cout << v1[i] << std::endl;
 }

@@ -59,18 +59,9 @@ public:
     MyVector& operator=(const MyVector<T>& orig)
     {
         std::cout << "operator=()" << std::endl;
-        if(this != &orig)
-        {
-            delete [] mVector; //dont forget to release it!
-            mSize = orig.size();
-            mVector = new T[mSize];
-            for(unsigned int i = 0; i < mSize; i++)
-            {
-                /*you dont necessarily use this->infront*/
-                //this->mVector[i] = orig.mVector[i];
-                mVector[i] = orig.mVector[i];
-            }
-        }
+        MyVector tmp(orig);/*copy-swap idiom*/
+        using std::swap;
+        swap(*this, tmp);
         return *this;
     }
 
@@ -80,22 +71,23 @@ public:
         /*
         note swap the whole object will trigger the copy constructor whose
         perform can be even worse than the ordinary version
-        */
+
         std::swap(mSize, orig.mSize);
         std::swap(mVector, orig.mVector);
+        */
+        using std::swap;
+        swap(*this, orig);
         return *this;
     }
 
     T& operator[](unsigned int index)
     {
-        std::cout << "operator[]" << std::endl;
-        std::cout <<std::endl;
-        std::cout << typeid(*this).name() <<std::endl;
-        std::cout <<std::endl;
+        /* You can use this to get the class name */
+        //std::cout << typeid(*this).name() <<std::endl;
         if(index >= mSize)
         {
             std::cout << "Index out of boundary!" << std::endl;
-            throw std::domain_error("Index out of boundary!");
+            throw std::out_of_range("Index out of boundary!");
         }
         else
         {
@@ -113,7 +105,7 @@ public:
 
     unsigned int size() const
     {
-        std::cout << "size()" << std::endl;
+        //std::cout << "size()" << std::endl;
         return mSize;
     }
 
@@ -134,6 +126,9 @@ private:
     T* mVector;
 
     template <typename C>
+    friend void swap(MyVector<C>& left, MyVector<C>& right);
+
+    template <typename C>
     friend bool operator==(const MyVector<C>& left, const MyVector<C>& right);
 
     template <typename C>
@@ -151,6 +146,15 @@ private:
     template <typename C> friend
     bool operator>=(const MyVector<C>& left, const MyVector<C>& right);
 };
+
+template <typename T>
+void swap(MyVector<T>& left, MyVector<T>& right)
+{
+    std::cout << "void swap(MyVector& left, MyVector& right)" << std::endl;
+    using std::swap;
+    swap(left.mSize, right.mSize);
+    swap(left.mVector, right.mVector);
+}
 
 template <typename T>
 bool operator==(const MyVector<T>& left, const MyVector<T>& right)
