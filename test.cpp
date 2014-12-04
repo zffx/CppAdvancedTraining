@@ -12,15 +12,17 @@ void testLab1()
     C c;
 }
 
-MyVector create_my_vector()
+/*
+MyVector create_MyVector()
 {
-    std::cout << "create_my_vector()" << std::endl;
+    std::cout << "create_MyVector()" << std::endl;
     MyVector v{ 10, 1 };
     return v;
 }
-
+*/
 void testLab2()
 {
+    /*
     MyVector v1(7, 1); // 7 elements initialized to 1
     v1.traceMyVector();
     MyVector v2(v1); // copying
@@ -30,9 +32,10 @@ void testLab2()
     v3 = v2;  // assignment
     v3.traceMyVector();
 
-    MyVector v4{ create_my_vector() }; //verify by debugging that moving ctr runs
-    v4 = create_my_vector();  //verify by debugging that moving assignment runs
+    MyVector v4{ create_MyVector() }; //verify by debugging that moving ctr runs
+    v4 = create_MyVector();  //verify by debugging that moving assignment runs
     v4.traceMyVector();
+    */
 }
 
 
@@ -106,8 +109,10 @@ void testLab4()
     delete shapes[1];
 }
 
+
 void testLab5()
 {
+    /*
     MyVector v1{ 7, 0 };
     MyVector v2{ 8, 0 };
     std::cout << (v1 == v2) << std::endl;
@@ -115,4 +120,30 @@ void testLab5()
     v1[0] = 1;
     v1.traceMyVector();
     std::cout << (v1 < v2) << std::endl;
+    */
+}
+
+void testLab7()
+{
+
+    class Test
+    {
+        // empty class
+    };
+
+
+    MyVector<std::string> v1{ 7, "Hej" };
+    MyVector<std::string> v2{ 8, "H?" };
+    std::cout << (v1 == v2) << std::endl;
+    std::cout << (v1 < v2) << std::endl;
+    v1[0] = "Paj";
+    std::cout << (v1 < v2) << std::endl;
+
+    MyVector<double> v3{ 10, 0.5 };
+    std::cout << v3[9] << std::endl;
+
+    MyVector<Test> v4{ 5 }; // possible
+    MyVector<Test> v5{ 5 };
+    //if (v4 == v5) // error! Test has no op!=. Template methods are compiled only when called
+    ;
 }

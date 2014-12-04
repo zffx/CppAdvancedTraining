@@ -15,7 +15,8 @@ int main()
          << "2.Lab2" << endl
          << "3.Lab3" << endl
          << "4.Lab4" << endl
-         << "5.Lab5" << endl;
+         << "5.Lab5" << endl
+         << "7.Lab7" << endl;
     unsigned int choice = 0;
     cin >> choice ;
 
@@ -44,6 +45,11 @@ int main()
     case 5:
     {
         testLab5();
+        break;
+    }
+    case 7:
+    {
+        testLab7();
         break;
     }
     default:
