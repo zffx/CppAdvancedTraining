@@ -13,20 +13,27 @@ public:
 
     int& operator[](unsigned int index);
     const int& operator[](unsigned int index) const;
-    bool operator==(const MyVector& right) const;
-    bool operator!=(const MyVector& right) const;
-    bool operator<(const MyVector& right) const;
-    bool operator<=(const MyVector& right) const;
-    bool operator>(const MyVector& right) const;
-    bool operator>=(const MyVector& right) const;
-
 
     unsigned int size() const;
     void traceMyVector();
 private:
     unsigned int mSize;
     int* mVector;
+
+    friend bool operator==(const MyVector& left, const MyVector& right);
+    friend bool operator!=(const MyVector& left, const MyVector& right);
+    friend bool operator<(const MyVector& left, const MyVector& right);
+    friend bool operator<=(const MyVector& left, const MyVector& right);
+    friend bool operator>(const MyVector& left, const MyVector& right);
+    friend bool operator>=(const MyVector& left, const MyVector& right);
 };
 
-void testLab2();
+bool operator==(const MyVector& left, const MyVector& right);
+bool operator!=(const MyVector& left, const MyVector& right);
+bool operator<(const MyVector& left, const MyVector& right);
+bool operator<=(const MyVector& left, const MyVector& right);
+bool operator>(const MyVector& left, const MyVector& right);
+bool operator>=(const MyVector& left, const MyVector& right);
+
+
 #endif // MYVECTOR_H

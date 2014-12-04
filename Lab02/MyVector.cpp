@@ -102,53 +102,60 @@ const int& MyVector::operator[](unsigned int index) const
     return const_cast<const int&>((*this)[index]);
 }
 
-bool MyVector::operator==(const MyVector& right) const
+bool operator==(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator==(const MyVector& right)" << std::endl;
-    if(mSize != right.size())
+    std::cout << "operator==(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    if(left.mSize != right.size())
         return false;
-    for(unsigned int i = 0; i < mSize; i++)
+    unsigned int size = std::min(left.mSize, right.mSize);
+    for(unsigned int i = 0; i < size; i++)
     {
-        if(mVector[i] != right.mVector[i])
+        if(left.mVector[i] != right.mVector[i])
             return false;
     }
     return true;
 }
 
-bool MyVector::operator!=(const MyVector& right) const
+bool operator!=(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator!=(const MyVector& right)" << std::endl;
-    return !(operator==(right));
+    std::cout << "operator!=(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    return !(operator==(left, right));
 }
 
-bool MyVector::operator<(const MyVector& right) const
+bool operator<(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator<" << std::endl;
-    unsigned int size = std::min(mSize, right.mSize);
+    std::cout << "operator<(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    unsigned int size = std::min(left.mSize, right.mSize);
     for(unsigned int i = 0; i < size; i++)
     {
-        if(mVector[i] > right.mVector[i])
+        if(left.mVector[i] > right.mVector[i])
             return false;
     }
-    return mSize < right.mSize ? true : false;
+    return left.mSize < right.mSize ? true : false;
 }
 
-bool MyVector::operator<=(const MyVector& right) const
+bool operator<=(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator<=" << std::endl;
-    return operator==(right) || operator <(right);
+    std::cout << "operator<=(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    return operator==(left, right) || operator <(left, right);
 }
 
-bool MyVector::operator>(const MyVector& right) const
+bool operator>(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator>" << std::endl;
-    return !operator<=(right);
+    std::cout << "operator>(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    return !operator<=(left, right);
 }
 
-bool MyVector::operator>=(const MyVector& right) const
+bool operator>=(const MyVector& left, const MyVector& right)
 {
-    std::cout << "MyVector::operator>=" << std::endl;
-    return ! operator<(right);
+    std::cout << "operator>=(const MyVector& left, const MyVector& right)" <<
+                 std::endl;
+    return ! operator<(left, right);
 }
 
 unsigned int MyVector::size() const
