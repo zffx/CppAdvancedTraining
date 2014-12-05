@@ -6,6 +6,16 @@
 #include <stdexcept>
 
 template <typename T>
+class Cmp
+{
+public:
+    bool operator()(T left, T right)
+    {
+        return left < right;
+    }
+};
+
+template <typename T>
 class MyVector{
 
 public:
@@ -100,8 +110,26 @@ public:
         std::cout << "operator[] const" << std::endl;
         return const_cast<const T&>((*this)[index]);
     }
-
-
+    template <typename Cmp>
+    void sort(Cmp<T> cmp)
+    {
+        if (mSize < 2)
+            return;
+        bool swapped;
+        do
+        {
+            swapped = false;
+            for(unsigned int i{ 0 }; i < mSize - 1; i++)
+            {
+                if (cmp(mVector[i+1],mVector[i])) // replace < for a callback
+                {
+                    using std::swap;
+                    swap(mVector[i], mVector[i+1]);
+                    swapped = true;
+                }
+            }
+        } while (swapped);
+    }
 
     unsigned int size() const
     {
