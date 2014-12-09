@@ -8,5 +8,6 @@ void testLab4();
 void testLab5();
 void testLab7();
 void TestLab11();
+void TestLab12();
 void testLabX();
 #endif // TEST_H

@@ -11,13 +11,16 @@ using std::endl;
 int main()
 {
     cout << "Input the number to run:" <<endl
-         << "1. Lab1" << endl
-         << "2. Lab2" << endl
-         << "3. Lab3" << endl
-         << "4. Lab4" << endl
-         << "5. Lab5" << endl
-         << "7. Lab7" << endl
-         << "11. Lab11" << endl;
+         << "1.     Lab1" << endl
+         << "2.     Lab2" << endl
+         << "3.     Lab3" << endl
+         << "4.     Lab4" << endl
+         << "5.     Lab5" << endl
+         << "6.     LabX" << endl
+         << "7.     Lab7" << endl
+         << "11.    Lab11" << endl
+         << "12.    Lab12" << endl;
+
     unsigned int choice = 0;
     cin >> choice ;
 
@@ -48,6 +51,11 @@ int main()
         testLab5();
         break;
     }
+    case 6:
+    {
+        testLabX();
+        break;
+    }
     case 7:
     {
         testLab7();
@@ -56,6 +64,11 @@ int main()
     case 11:
     {
         TestLab11();
+        break;
+    }
+    case 12:
+    {
+        TestLab12();
         break;
     }
     default:

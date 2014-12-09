@@ -69,21 +69,23 @@ void testLabX()
 {
     class MyBase {
     public:
-        virtual void m() { std::cout << "MyBase::m()" << std::endl;}
-        MyBase() { std::cout << "MyBase::MyBase()" << std::endl; this->m();}
-        virtual ~MyBase()
-        {}
+        MyBase() { std::cout << "MyBase::MyBase()" << std::endl; init(); }
+        virtual ~MyBase() { std::cout << "MyBase::~MyBase()" << std::endl; }
+        virtual void init() { std::cout << "MyBase::init()" << std::endl; } /*
+        when init() gets called from MyBase::MyBase() when MyDerived is
+        being constructed, since the construction is not complete, there will
+        be no polymorphic behavior (i.e. the init() is MyBase will be called
+        instead of the one in MyDerived)*/
     };
 
     class MyDerived : public MyBase {
     public:
-        void m(){ std::cout << "MyDerived::m()" << std::endl;}
-        MyDerived() { std::cout << "MyDerived::MyDerived()" << std::endl; m();}
-        ~MyDerived() {}
+        MyDerived() { std::cout << "MyDerived::MyDerived()" << std::endl;}
+        ~MyDerived() { std::cout << "MyDerived::~MyDerived()" << std::endl; }
+        virtual void init() { std::cout << "MyDerived::init()" << std::endl; }
     };
 
     MyBase *pM = new MyDerived();
-    pM->m();
     delete pM;
 }
 
@@ -152,7 +154,9 @@ void testLab7()
     ;
 }
 
+/*  Lab 11   */
 MyVector<std::string> f() { return MyVector<std::string>(100); }
+
 void TestLab11()
 {
     MyVector<std::string> v1{ 7, "Hello" };
@@ -174,4 +178,56 @@ void TestLab11()
     }
     for (unsigned int i{ 0 }; i < 7; i++)
         std::cout << v1[i] << std::endl;
+}
+
+/*  Lab 12  */
+template <typename T>
+class SizeCompareFunctionClass
+{
+public:
+    bool operator()(const T& left, const T& right)
+    {
+        return left.size() < right.size();
+    }
+};
+
+template <typename T>
+bool sizeCompareFunction(const T& left, const T& right)
+{
+    return left.size() > right.size();
+}
+
+auto lambdaExpr = [](const std::string& left, const std::string& right)
+{
+    return left.size() < right.size();
+};
+
+void TestLab12()
+{
+    MyVector<std::string> v{ 3 };
+    v[0] = "Andersson"; v[1] = "Uggla"; v[2] = "Pettersson";
+
+    std::cout << "Sort with ascending sequence of Name length" << std::endl;
+    SizeCompareFunctionClass<std::string> cmpFunctionObject;
+    v.sort(cmpFunctionObject);  /* or function pointer, or std::greater<>, or
+    lambda expression...*/
+    std::cout << v[0] << std::endl << v[1] << std::endl << v[2] << std::endl;
+
+    std::cout << "Sort with descending sequence of Name length" << std::endl;
+    v.sort(sizeCompareFunction<std::string>);  /* or function pointer,
+    or std::greater<>, or lambda expression...*/
+    std::cout << v[0] << std::endl << v[1] << std::endl << v[2] << std::endl;
+
+    std::cout << "Sort with ascending sequence of Name length" << std::endl;
+    v.sort(lambdaExpr);  /* or function pointer,
+    or std::greater<>, or lambda expression...*/
+    std::cout << v[0] << std::endl << v[1] << std::endl << v[2] << std::endl;
+
+    std::cout << "Sort with descending sequence of Name length" << std::endl;
+    bool (*compareFuncPtr)(const std::string&, const std::string&);
+    compareFuncPtr = sizeCompareFunction<std::string>;
+    v.sort(compareFuncPtr);  /* or function pointer, or std::greater<>, or
+    lambda expression...*/
+    std::cout << v[0] << std::endl << v[1] << std::endl << v[2] << std::endl;
+
 }
